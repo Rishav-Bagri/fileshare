@@ -22,6 +22,7 @@ fileRouter.get("/bulk",async(req,res)=>{
         
         const f=await fs.promises.readdir(path);
         f.forEach(x => {
+            
             file.push(x)
             console.log(x);
             
@@ -43,6 +44,18 @@ fileRouter.get("/download/:id",(req,res)=>{
 fileRouter.post("/upload",upload.single("file"),async(req,res)=>{
     console.log("hn bhyii")
     res.json({msg:"ok bhai dal gyi file"})
+})
+
+fileRouter.delete("/delete/:id",async(req,res)=>{
+    const p=path+"/"+req.params.id
+    try{
+        fs.promises.unlink(p);
+        res.json({msg:"msg deleted"})
+    }catch(e){
+        console.log(e);
+        res.json({msg:"ni hua msg delete"+e})
+        
+    }
 })
 
 
